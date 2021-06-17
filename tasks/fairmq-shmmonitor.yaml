@@ -1,0 +1,20 @@
+name: fairmq-shmmonitor
+defaults:
+  log_task_output: none
+  user: flp
+  log: none
+  session_id: default
+  _module_cmdline: >-
+    source /etc/profile.d/modules.sh && MODULEPATH={{ modulepath }} module load FairMQ &&
+    fairmq-shmmonitor -c
+  _plain_cmdline: "source /etc/profile.d/o2.sh && fairmq-shmmonitor -c"
+control:
+  mode: basic
+wants:
+  cpu: 0.01
+  memory: 3
+command:
+  log: "{{ log_task_output }}"
+  shell: true
+  user: "{{ user }}"
+  value: "{{ len(modulepath)>0 ? _module_cmdline : _plain_cmdline }}"
