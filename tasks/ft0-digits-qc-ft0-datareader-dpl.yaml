@@ -1,17 +1,22 @@
-name: mft-raw-qc-QC-CHECK-RUNNER-BasicReadoutHeaderQcCheck
+name: ft0-digits-qc-ft0-datareader-dpl
 defaults:
   log_task_output: none
   _module_cmdline: >-
     source /etc/profile.d/modules.sh && MODULEPATH={{ modulepath }} module load O2 QualityControl Control-OCCPlugin &&
-    {{ dpl_command }} | o2-qc
-  _plain_cmdline: "source /etc/profile.d/o2.sh && {{ dpl_command }} | o2-qc"
+    {{ dpl_command }} | o2-ft0-flp-dpl-workflow
+  _plain_cmdline: "source /etc/profile.d/o2.sh && {{ dpl_command }} | o2-ft0-flp-dpl-workflow"
 control:
   mode: "fairmq"
 wants:
   cpu: 0.01
   memory: 1
 bind:
-  - name: from_QC-CHECK-RUNNER-BasicReadoutHeaderQcCheck_to_internal-dpl-injected-dummy-sink
+  - name: from_ft0-datareader-dpl_to_QC-TASK-RUNNER-DigitQcTask
+    type: push
+    transport: shmem
+    addressing: ipc
+    rateLogging: "{{ fmq_rate_logging }}"
+  - name: from_ft0-datareader-dpl_to_dpl-output-proxy
     type: push
     transport: shmem
     addressing: ipc
@@ -40,7 +45,7 @@ command:
     - "--resources-monitoring"
     - "'{{ resources_monitoring }}'"
     - "--id"
-    - "'QC-CHECK-RUNNER-BasicReadoutHeaderQcCheck'"
+    - "'ft0-datareader-dpl'"
     - "--shm-monitor"
     - "'false'"
     - "--log-color"
@@ -61,10 +66,11 @@ command:
     - "''"
     - "--clone"
     - "''"
-    - "--config"
-    - "'{{ qc_config_uri }}'"
+    - "--configKeyValues"
+    - "''"
+    - "--disable-root-output"
     - "--fairmq-ipc-prefix"
-    - "'/tmp'"
+    - "'/tmp/flp'"
     - "--fairmq-rate-logging"
     - "'0'"
     - "--fairmq-recv-buffer-size"
@@ -75,8 +81,6 @@ command:
     - "'drop'"
     - "--forwarding-policy"
     - "'dangling'"
-    - "--host"
-    - "''"
     - "--pipeline"
     - "''"
     - "--readers"

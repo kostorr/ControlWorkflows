@@ -24,6 +24,10 @@ function check_pwd() {
 check_pwd
 
 # ./datasampling-02.sh # this is a test workflow, no need for it in production
+./cpv-compressor.sh
+./cpv-qc-compressor.sh
+./ft0-digits-qc.sh
+./emc-qcmn-epn.sh
 ./hmpid-raw-qcmn.sh
 ./hmpid-raw-qc.sh
 ./its-qc-fhr-fee.sh
@@ -33,6 +37,7 @@ check_pwd
 ./mft-digits-qc.sh
 # ./mft-raw-digits-qc.sh # disabled until the MFT decoder is fixed and we optimize the workflow
 ./mft-raw-qcmn.sh
+./mft-raw-direct-qcmn.sh
 ./mft-raw-qc.sh
 ./mid-raw-parser.sh
 ./minimal-dpl.sh
