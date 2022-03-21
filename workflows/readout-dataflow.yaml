@@ -1210,6 +1210,7 @@ roles:
       - name: "readout"
         vars:
           readout_cfg_uri: '{{dd_enabled == "true" ? readout_cfg_uri_stfb : readout_cfg_uri_standalone}}'
+          il_role: "ctp-readout-{{ Flatten(detectors) }}"
         task:
           load: readout
       - name: "data-distribution"
@@ -1286,6 +1287,7 @@ roles:
       - name: "readout"
         vars:
           readout_cfg_uri: '{{dd_enabled == "true" ? readout_cfg_uri_stfb : readout_cfg_uri_standalone}}'
+          il_role: "{{ it }}" # Rolename same as hostname
         task:
           load: readout
       - name: "data-distribution"

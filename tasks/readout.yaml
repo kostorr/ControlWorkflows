@@ -25,6 +25,7 @@ command:
   env:
     - O2_DETECTOR={{ detector }}
     - O2_PARTITION={{ environment_id }}
+    - O2_ROLE={{ il_role }}
   user: "{{ user }}"
   arguments:
     - "{{ readout_cfg_uri }}"
